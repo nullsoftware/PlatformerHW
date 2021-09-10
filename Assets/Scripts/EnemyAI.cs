@@ -89,9 +89,10 @@ public class EnemyAI : MonoBehaviour
         if (_attackTimeStamp <= Time.time)
         {
             int dmg = Random.Range(_minDamage, _maxDamage);
-            Debug.Log($"Damege: {dmg}");
             _target.ApplyDamage(dmg);
             _attackTimeStamp = Time.time + _attackCooldown;
+
+            Debug.Log($"Damege: {dmg}");
         }
     }
 }
