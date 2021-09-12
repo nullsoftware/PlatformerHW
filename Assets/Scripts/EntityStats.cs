@@ -12,7 +12,7 @@ public class EntityStats : MonoBehaviour
     private const string DamageAppliedTriggerName = "DamageApplied";
 
     private Animator _animator;    
-    [SerializeField, Range(1, int.MaxValue)] private int _maxHealth = 100;
+    [SerializeField, Range(1, 1000)] private int _maxHealth = 100;
     [SerializeField] private int _health = 100;
 
     public UnityEvent<int> HealthChangedEvent;

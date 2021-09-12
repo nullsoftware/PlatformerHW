@@ -8,10 +8,11 @@ using UnityEngine;
 public class PlayerAbilities : MonoBehaviour
 {
     [SerializeField] private float _invisibilityCooldown = 15f;
-    [SerializeField] private float _invisibilityDuration = 7f;
+    [SerializeField] private float _invisibilityDuration = 5f;
 
     private SpriteRenderer _sprite;
-    private float _invisibilityTimeStamp;
+    private float _invisibilityCooldownTimeStamp;
+    private float _invisibilityDurationTimeStamp;
     private bool _isInvisible;
 
     public bool IsInvisible => _isInvisible;
@@ -25,19 +26,21 @@ public class PlayerAbilities : MonoBehaviour
     {
         if (CanActivateInvisibility() && Input.GetKey(KeyCode.E))
             ActivateInvisibility();
+
+        if (_isInvisible && _invisibilityDurationTimeStamp <= Time.time)
+            SetInvisibility(false);
     }
 
     private bool CanActivateInvisibility()
     {
-        return _invisibilityTimeStamp <= Time.time;
+        return _invisibilityCooldownTimeStamp <= Time.time;
     }
 
     private void ActivateInvisibility()
     {
         SetInvisibility(true);
-        _invisibilityTimeStamp = Time.time + _invisibilityCooldown;
-
-        RunWithDelay(() => SetInvisibility(false), _invisibilityDuration);
+        _invisibilityCooldownTimeStamp = Time.time + _invisibilityCooldown;
+        _invisibilityDurationTimeStamp = Time.time + _invisibilityDuration;
     }
 
     private void SetInvisibility(bool value)
@@ -46,10 +49,4 @@ public class PlayerAbilities : MonoBehaviour
         _sprite.material.color = new Color(1f, 1f, 1f, value ? .5f : 1f);
     }
 
-    private async Task RunWithDelay(Action action, float secondsDelay)
-    {
-        await Task.Delay(TimeSpan.FromSeconds(secondsDelay));
-
-        action();
-    }
 }

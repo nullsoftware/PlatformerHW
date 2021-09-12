@@ -16,6 +16,7 @@ public class EnemyAI : MonoBehaviour
 
     private Collider2D _ownCollider;
     private Collider2D _targetCollider;
+    private PlayerAbilities _targetAbilities;
     private Rigidbody2D _rigidbody;
     private bool _isAttackMode;
     private Vector3 _leftPoint;
@@ -29,6 +30,7 @@ public class EnemyAI : MonoBehaviour
         _ownCollider = GetComponent<Collider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _targetCollider = _target.GetComponent<Collider2D>();
+        _targetAbilities = _target.GetComponent<PlayerAbilities>();
 
         RefreshObservePoint();
     }
@@ -46,6 +48,11 @@ public class EnemyAI : MonoBehaviour
             else
             {
                 _rigidbody.velocity = (_target.transform.position - transform.position).normalized * _moveSpeed;
+            }
+
+            if (_targetAbilities.IsInvisible)
+            {
+                _isAttackMode = false;
             }
         }
         else
@@ -65,7 +72,7 @@ public class EnemyAI : MonoBehaviour
             // searching for target in observe radius
             Collider2D[] hits = Physics2D.OverlapCircleAll(_ownCollider.bounds.center, _observeRadius);
 
-            if (hits.Any(t => t.gameObject.TryGetComponent(out EntityStats entityStats) && entityStats == _target))
+            if (_target != null && _targetAbilities.IsInvisible == false && hits.Any(t => t.gameObject == _target.gameObject))
             {
                 _isAttackMode = true;
             }
