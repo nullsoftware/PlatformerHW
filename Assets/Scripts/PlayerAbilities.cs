@@ -29,7 +29,7 @@ public class PlayerAbilities : MonoBehaviour
 
     private void Update()
     {
-        if (_invisibilityCooldownTimeStamp <= Time.time && Input.GetKeyDown(KeyCode.E))
+        if (_invisibilityCooldownTimeStamp <= Time.time && Input.GetButtonDown(InputConstants.AbilityButtonName))
             ActivateInvisibility();
 
         if (_isInvisible && _invisibilityDurationTimeStamp <= Time.time)
