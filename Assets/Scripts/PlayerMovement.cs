@@ -7,12 +7,13 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : MonoBehaviour
 {
-    private Animator _playerAnimator;
-    private BoxCollider2D _collider;
-    private Rigidbody2D _rigidbody;
     [SerializeField] private float _runSpeed = 4f;
     [SerializeField] private float _jumpForce = 14f;
     [SerializeField] private LayerMask _platformLayerMask;
+
+    private Animator _playerAnimator;
+    private BoxCollider2D _collider;
+    private Rigidbody2D _rigidbody;
 
     private bool IsRunning
     {
