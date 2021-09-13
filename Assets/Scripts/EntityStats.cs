@@ -8,10 +8,9 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Animator))]
 public class EntityStats : MonoBehaviour
 {
-    private const string DamageAppliedTriggerName = "DamageApplied";
-
     [SerializeField, Range(1, 1000)] private int _maxHealth = 100;
     [SerializeField] private int _health = 100;
+    [SerializeField] private string _damageAppliedTriggerName = "DamageApplied";
 
     private Animator _animator;
 
@@ -34,7 +33,7 @@ public class EntityStats : MonoBehaviour
             throw new System.ArgumentOutOfRangeException(nameof(damage));
 
         _health = Mathf.Max(0, _health - damage);
-        _animator.SetTrigger(DamageAppliedTriggerName);
+        _animator.SetTrigger(_damageAppliedTriggerName);
         HealthChanged?.Invoke(_health);
 
         if (_health == 0)
