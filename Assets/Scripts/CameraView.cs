@@ -6,15 +6,15 @@ public class CameraView : MonoBehaviour
 {
     [SerializeField] private Transform _targetTransform;
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (_targetTransform == null)
             return;
 
-        Vector3 currentPos = transform.position;
+        Vector3 currentPosition = transform.position;
 
-        currentPos.x = _targetTransform.position.x;
+        currentPosition.x = _targetTransform.position.x;
 
-        transform.position = currentPos;
+        transform.position = currentPosition;
     }
 }

@@ -8,15 +8,15 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(Animator))]
 public class EntityStats : MonoBehaviour
 {
-    private const string DeathFieldTagName = "DeathField";
     private const string DamageAppliedTriggerName = "DamageApplied";
 
-    private Animator _animator;    
     [SerializeField, Range(1, 1000)] private int _maxHealth = 100;
     [SerializeField] private int _health = 100;
 
-    public UnityEvent<int> HealthChangedEvent;
-    public UnityEvent EntityDiedEvent;
+    private Animator _animator;
+
+    public UnityEvent<int> HealthChanged;
+    public UnityEvent EntityDied;
 
     public bool IsDead => _health == 0;
 
@@ -25,7 +25,7 @@ public class EntityStats : MonoBehaviour
         _animator = GetComponent<Animator>();
         _health = Mathf.Min(_maxHealth, _health);
 
-        HealthChangedEvent.Invoke(_health);
+        HealthChanged.Invoke(_health);
     }
 
     public void ApplyDamage(int damage)
@@ -35,18 +35,18 @@ public class EntityStats : MonoBehaviour
 
         _health = Mathf.Max(0, _health - damage);
         _animator.SetTrigger(DamageAppliedTriggerName);
-        HealthChangedEvent.Invoke(_health);
+        HealthChanged?.Invoke(_health);
 
         if (_health == 0)
         {
-            EntityDiedEvent.Invoke();
+            EntityDied?.Invoke();
             Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag == DeathFieldTagName)
+        if (collision.GetComponent<DeathField>() != null)
         {
             ApplyDamage(_health);
         }

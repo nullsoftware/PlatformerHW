@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public class CoinCollector : MonoBehaviour
 {
-    private int _coinsCollected;
-
     [SerializeField] private string _coinTag;
     [SerializeField] private AudioSource _collectSound;
+
+    private int _coinsCollected;
 
     public UnityEvent<int> CoinCollectedEvent;
 
