@@ -6,9 +6,9 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class TextInfoUpdater : MonoBehaviour
 {
-    private TMP_Text _textMesh;
-
     [SerializeField] string _textFormat;
+
+    private TMP_Text _textMesh;
 
     private void Start()
     {
