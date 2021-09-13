@@ -11,7 +11,7 @@ public class PlayerAbilities : MonoBehaviour
     [SerializeField] private float _invisibilityCooldown = 10f;
     [SerializeField] private float _invisibilityDuration = 3f;
     [SerializeField] private TMP_Text _abilityInfoTextMesh;
-    [SerializeField] private string _abilityInfoTextFormat = "Cooldown: {0} sec";
+    [SerializeField] private string _abilityInfoTextFormat = "Cooldown: {0:F1} sec";
 
     private SpriteRenderer _sprite;
     private float _invisibilityCooldownTimeStamp;
@@ -59,7 +59,7 @@ public class PlayerAbilities : MonoBehaviour
         float secondsLeft = _invisibilityCooldownTimeStamp - Time.time;
 
         if (secondsLeft >= 0)
-            return string.Format(_abilityInfoTextFormat, secondsLeft.ToString("F2"));
+            return string.Format(_abilityInfoTextFormat, secondsLeft);
         else
             return _defaultText;
     }

@@ -11,12 +11,12 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int _minDamage = 5;
     [SerializeField] private int _maxDamage = 20;
     [SerializeField] private float _observeRadius = 5;
-    [SerializeField] private float _attackCooldown = 2.5f;
-    [SerializeField] private EntityStats _target;
+    [SerializeField] private float _attackCooldown = 1.5f;
+    [SerializeField] private EntityStats _targetStats;
+    [SerializeField] private Collider2D _targetCollider;
+    [SerializeField] private PlayerAbilities _targetAbilities;
 
     private Collider2D _ownCollider;
-    private Collider2D _targetCollider;
-    private PlayerAbilities _targetAbilities;
     private Rigidbody2D _rigidbody;
     private bool _isAttackMode;
     private Vector3 _leftPoint;
@@ -29,55 +29,23 @@ public class EnemyAI : MonoBehaviour
     {
         _ownCollider = GetComponent<Collider2D>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _targetCollider = _target.GetComponent<Collider2D>();
-        _targetAbilities = _target.GetComponent<PlayerAbilities>();
 
         RefreshObservePoint();
     }
 
     private void FixedUpdate()
     {
-        if (_isAttackMode && _target != null)
+        if (_isAttackMode && _targetStats != null)
         {
-            if (_ownCollider.IsTouching(_targetCollider))
-            {
-                TryAttack();
-
-                _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
-            }
-            else
-            {
-                _rigidbody.velocity = (_target.transform.position - transform.position).normalized * _moveSpeed;
-            }
+            AttackTarget();
         }
         else
         {
-            if (_currentDirection == Vector3.zero)
-            {
-                _currentDirection = _leftPoint;
-            }
-
-            if (Vector2.Distance(transform.position, _currentDirection) < 1)
-            {
-                _currentDirection = (_currentDirection == _rightPoint) ? _leftPoint : _rightPoint;
-            }
-
-            _rigidbody.velocity = (_currentDirection - transform.position).normalized * _moveSpeed;
-
-            // searching for target in observe radius
-            Collider2D[] hits = Physics2D.OverlapCircleAll(_ownCollider.bounds.center, _observeRadius);
-
-            if (_target != null && _targetAbilities.IsInvisible == false && hits.Any(t => t.gameObject == _target.gameObject))
-            {
-                _isAttackMode = true;
-            }
+            MoveBeetwenPoints();
+            SearchForTarget();
         }
 
-        if ((_rigidbody.velocity.x > 0 && !_isRotated) || (_rigidbody.velocity.x <= 0 && _isRotated))
-        {
-            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
-            _isRotated = !_isRotated;
-        }
+        RotateIfNeeded();
     }
 
     private void RefreshObservePoint()
@@ -86,15 +54,64 @@ public class EnemyAI : MonoBehaviour
         _rightPoint = new Vector3(transform.position.x + _observeRadius, transform.position.y);
     }
 
-    private void TryAttack()
+    private void TryDamage()
     {
         if (_attackTimeStamp <= Time.time)
         {
             int dmg = Random.Range(_minDamage, _maxDamage);
-            _target.ApplyDamage(dmg);
+            _targetStats.ApplyDamage(dmg);
             _attackTimeStamp = Time.time + _attackCooldown;
 
             Debug.Log($"Damege: {dmg}");
+        }
+    }
+
+    private void AttackTarget()
+    {
+        if (_ownCollider.IsTouching(_targetCollider))
+        {
+            TryDamage();
+
+            _rigidbody.velocity = new Vector2(_rigidbody.velocity.x, 0);
+        }
+        else
+        {
+            _rigidbody.velocity = (_targetStats.transform.position - transform.position).normalized * _moveSpeed;
+        }
+    }
+
+    private void MoveBeetwenPoints()
+    {
+        if (_currentDirection == Vector3.zero)
+        {
+            _currentDirection = _leftPoint;
+        }
+
+        if (Vector2.Distance(transform.position, _currentDirection) < 1)
+        {
+            _currentDirection = (_currentDirection == _rightPoint) ? _leftPoint : _rightPoint;
+        }
+
+        _rigidbody.velocity = (_currentDirection - transform.position).normalized * _moveSpeed;
+    }
+
+    private void SearchForTarget()
+    {
+        // searching for target in observe radius
+        Collider2D[] hits = Physics2D.OverlapCircleAll(_ownCollider.bounds.center, _observeRadius);
+
+        if (_targetStats != null && _targetAbilities.IsInvisible == false && hits.Any(t => t.gameObject == _targetStats.gameObject))
+        {
+            _isAttackMode = true;
+        }
+    }
+
+    private void RotateIfNeeded()
+    {
+        if ((_rigidbody.velocity.x > 0 && !_isRotated) || (_rigidbody.velocity.x <= 0 && _isRotated))
+        {
+            transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);
+            _isRotated = !_isRotated;
         }
     }
 }

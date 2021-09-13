@@ -638,7 +638,7 @@ MonoBehaviour:
   _invisibilityCooldown: 10
   _invisibilityDuration: 3
   _abilityInfoTextMesh: {fileID: 1453029958}
-  _abilityInfoTextFormat: 'Cooldown: {0} sec'
+  _abilityInfoTextFormat: 'Cooldown: {0:F1} sec'
 --- !u!1 &449675119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1290,6 +1290,18 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 385179802}
+    - target: {fileID: 8876408913365820815, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
+      propertyPath: _targetStats
+      value: 
+      objectReference: {fileID: 385179802}
+    - target: {fileID: 8876408913365820815, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
+      propertyPath: _targetCollider
+      value: 
+      objectReference: {fileID: 385179797}
+    - target: {fileID: 8876408913365820815, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
+      propertyPath: _targetAbilities
+      value: 
+      objectReference: {fileID: 385179803}
     - target: {fileID: 8876408913365820912, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.02
@@ -1351,6 +1363,18 @@ PrefabInstance:
       propertyPath: _target
       value: 
       objectReference: {fileID: 385179802}
+    - target: {fileID: 8876408913365820815, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
+      propertyPath: _targetStats
+      value: 
+      objectReference: {fileID: 385179802}
+    - target: {fileID: 8876408913365820815, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
+      propertyPath: _targetCollider
+      value: 
+      objectReference: {fileID: 385179797}
+    - target: {fileID: 8876408913365820815, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
+      propertyPath: _targetAbilities
+      value: 
+      objectReference: {fileID: 385179803}
     - target: {fileID: 8876408913365820912, guid: eb876c19b0a67b64393b7cdaa5500ed4, type: 3}
       propertyPath: m_LocalPosition.x
       value: -53.356106
