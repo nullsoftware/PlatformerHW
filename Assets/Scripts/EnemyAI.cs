@@ -49,11 +49,6 @@ public class EnemyAI : MonoBehaviour
             {
                 _rigidbody.velocity = (_target.transform.position - transform.position).normalized * _moveSpeed;
             }
-
-            if (_targetAbilities.IsInvisible)
-            {
-                _isAttackMode = false;
-            }
         }
         else
         {
