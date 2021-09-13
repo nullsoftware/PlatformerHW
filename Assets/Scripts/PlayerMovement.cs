@@ -30,8 +30,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        float movX = Input.GetAxisRaw("Horizontal");
-        bool isJumpRequested = Input.GetButton("Jump") && IsGrounded();
+        float movX = Input.GetAxisRaw(InputConstants.HorizontalAxisName);
+        bool isJumpRequested = Input.GetButton(InputConstants.JumpButtonName) && IsGrounded();
 
         _rigidbody.velocity = new Vector2(movX * _runSpeed, isJumpRequested ? _jumpForce : _rigidbody.velocity.y);
 

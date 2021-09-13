@@ -24,7 +24,7 @@ public class EntityStats : MonoBehaviour
         _animator = GetComponent<Animator>();
         _health = Mathf.Min(_maxHealth, _health);
 
-        HealthChanged.Invoke(_health);
+        HealthChanged?.Invoke(_health);
     }
 
     public void ApplyDamage(int damage)
