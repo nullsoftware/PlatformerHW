@@ -95,7 +95,6 @@ public class EnemyAI : MonoBehaviour
 
     private void SearchForTarget()
     {
-        // searching for target in observe radius
         Collider2D[] hits = Physics2D.OverlapCircleAll(_ownCollider.bounds.center, _observeRadius);
 
         if (_target != null && _target.Abilities.IsInvisible == false && hits.Any(t => t.gameObject == _target.gameObject))
