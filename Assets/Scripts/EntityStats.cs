@@ -45,7 +45,7 @@ public class EntityStats : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<DeathField>() != null)
+        if (collision.TryGetComponent(out DeathField _))
         {
             ApplyDamage(_health);
         }

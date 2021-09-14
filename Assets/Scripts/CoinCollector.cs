@@ -18,7 +18,7 @@ public class CoinCollector : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Coin>() != null)
+        if (collision.TryGetComponent(out Coin _))
         {
             Destroy(collision.gameObject);
             _coinsCollected++;
