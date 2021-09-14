@@ -12,9 +12,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int _maxDamage = 20;
     [SerializeField] private float _observeRadius = 5;
     [SerializeField] private float _attackCooldown = 1.5f;
-    [SerializeField] private EntityStats _targetStats;
-    [SerializeField] private Collider2D _targetCollider;
-    [SerializeField] private PlayerAbilities _targetAbilities;
+    [SerializeField] private PlayerInfo _target;
 
     private Collider2D _ownCollider;
     private Rigidbody2D _rigidbody;
@@ -35,7 +33,7 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (_isAttackMode && _targetStats != null)
+        if (_isAttackMode && _target != null)
         {
             AttackTarget();
         }
@@ -59,7 +57,7 @@ public class EnemyAI : MonoBehaviour
         if (_attackTimeStamp <= Time.time)
         {
             int dmg = Random.Range(_minDamage, _maxDamage);
-            _targetStats.ApplyDamage(dmg);
+            _target.Stats.ApplyDamage(dmg);
             _attackTimeStamp = Time.time + _attackCooldown;
 
             Debug.Log($"Damege: {dmg}");
@@ -68,7 +66,7 @@ public class EnemyAI : MonoBehaviour
 
     private void AttackTarget()
     {
-        if (_ownCollider.IsTouching(_targetCollider))
+        if (_ownCollider.IsTouching(_target.Collider))
         {
             TryDamage();
 
@@ -76,7 +74,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            _rigidbody.velocity = (_targetStats.transform.position - transform.position).normalized * _moveSpeed;
+            _rigidbody.velocity = (_target.Stats.transform.position - transform.position).normalized * _moveSpeed;
         }
     }
 
@@ -100,7 +98,7 @@ public class EnemyAI : MonoBehaviour
         // searching for target in observe radius
         Collider2D[] hits = Physics2D.OverlapCircleAll(_ownCollider.bounds.center, _observeRadius);
 
-        if (_targetStats != null && _targetAbilities.IsInvisible == false && hits.Any(t => t.gameObject == _targetStats.gameObject))
+        if (_target != null && _target.Abilities.IsInvisible == false && hits.Any(t => t.gameObject == _target.gameObject))
         {
             _isAttackMode = true;
         }
