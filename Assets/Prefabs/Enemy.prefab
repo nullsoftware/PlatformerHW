@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 8876408913365820916}
   - component: {fileID: 8876408913365820913}
   - component: {fileID: 8876408913365820815}
+  - component: {fileID: 8076415091785090397}
+  - component: {fileID: 9081028650072480764}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -167,10 +169,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _maxHealth: 100
   _health: 100
-  HealthChangedEvent:
+  _damageAppliedTriggerName: DamageApplied
+  HealthChanged:
     m_PersistentCalls:
       m_Calls: []
-  EntityDiedEvent:
+  EntityDied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &8876408913365820815
@@ -185,9 +188,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 137ec77af0360e146a46781f07b13366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 3
+  _target: {fileID: 0}
+--- !u!114 &8076415091785090397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876408913365820919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 169d5e1bd08676243ad5195cc1561ea0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 5
+  _observeRadius: 5
+--- !u!114 &9081028650072480764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8876408913365820919}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eff21478cade6234bb56d69dc789e644, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _minDamage: 5
   _maxDamage: 20
-  _observeRadius: 5
-  _attackCooldown: 2.5
-  _target: {fileID: 0}
+  _attackCooldown: 1.5
