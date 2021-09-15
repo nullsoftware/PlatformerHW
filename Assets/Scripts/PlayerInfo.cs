@@ -9,7 +9,6 @@ public class PlayerInfo : MonoBehaviour
     public Collider2D Collider { get; private set; }
     public PlayerAbilities Abilities { get; private set; }
 
-
     private void Start()
     {
         Stats = GetComponent<EntityStats>();
